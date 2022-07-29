@@ -1,6 +1,8 @@
 package bcdt
 
 import (
+	"bytes"
+	"encoding/binary"
 	"time"
 )
 
@@ -29,6 +31,14 @@ func Encode(epoch int64) uint32 {
 	i |= uint32(t.Minute())
 
 	return i
+}
+
+func DecodeByteArray(be []byte) int64 {
+	var encoded uint32
+	buf := bytes.NewReader(be)
+	binary.Read(buf, binary.BigEndian, &encoded)
+
+	return Decode(encoded)
 }
 
 func Decode(datetime uint32) int64 {
