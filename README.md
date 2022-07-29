@@ -1,9 +1,9 @@
 # Bitwise Comparable Datetime Encoding
 
 Solana nodes provide memcmp for filters based on byte level comparisons. We
-introduce the bitwise comparable datetime (BCDT). BCDT encodes datetime to
-minute precision in 4-bytes, an int32 while supporting byte queries by year and
-month, by day and by time. Year and month are encoded in the first byte, the
+introduce the bitwise comparable datetime (BCDT) format. BCDT encodes datetime
+to minute precision in 4-bytes, an int32 while supporting byte queries by year
+and month, by day and by time. Year and month are encoded in the first byte, the
 next three bytes each eoncode day, hour and minute. The last 3 bytes are zero
 padded to align day, hour and minute on bytes 2, 3 and 4 respectively.
 
