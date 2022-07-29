@@ -1,6 +1,8 @@
 package bcdt_test
 
 import (
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"strconv"
 	"testing"
@@ -8,6 +10,19 @@ import (
 
 	bcdt "github.com/snoworly/bitwise-comparable-datetime-go"
 )
+
+func TestOracleExample(t *testing.T) {
+	epoch := 1659079415
+	encoded := bcdt.Encode(int64(epoch))
+
+	bs := make([]byte, 4)
+	binary.BigEndian.PutUint32(bs, encoded)
+
+	expected := []byte{7, 29, 7, 23}
+	if bytes.Compare(bs, expected) != 0 {
+		t.Errorf("expected %v but got %v", expected, bs)
+	}
+}
 
 func TestFollowRealtime(t *testing.T) {
 	t0 := time.Now()
@@ -41,6 +56,11 @@ func TestEncode(t *testing.T) {
 	fmt.Println("output bin  m ", strconv.FormatInt(int64((encoded&(15<<24))>>24), 2))
 	fmt.Println("output bin  d ", strconv.FormatInt(int64((encoded&(63<<16))>>16), 2))
 
+	bs := make([]byte, 4)
+	binary.BigEndian.PutUint32(bs, encoded)
+	fmt.Printf("date bytes     %x\n", bs)
+	fmt.Println("date bytes    ", bs)
+
 	var expected uint32 = 119341056
 	if encoded != expected {
 		t.Errorf("expected %v but got %v", expected, encoded)
@@ -71,4 +91,9 @@ func TestSplit(t *testing.T) {
 	fmt.Println("output bin  h ", strconv.FormatInt(hour, 2))
 	fmt.Println("output dec  m ", min)
 	fmt.Println("output bin  m ", strconv.FormatInt(min, 2))
+
+	bs := make([]byte, 4)
+	binary.BigEndian.PutUint32(bs, encoded)
+	fmt.Printf("date bytes     %x\n", bs)
+	fmt.Println("date bytes    ", bs)
 }

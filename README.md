@@ -2,10 +2,10 @@
 
 Solana nodes provide memcmp for filters based on byte level comparisons. We
 introduce the bitwise comparable datetime (BCDT) format. BCDT encodes datetime
-to minute precision in 4-bytes, an int32 while supporting byte queries by year
-and month, by day and by time. Year and month are encoded in the first byte, the
-next three bytes each eoncode day, hour and minute. The last 3 bytes are zero
-padded to align day, hour and minute on bytes 2, 3 and 4 respectively.
+to minute precision in 4-bytes big endian encoded. Year and month are encoded
+in the first byte, the next three bytes each eoncode day, hour and minute. The
+last 3 bytes are zero padded to align day, hour and minute on bytes 2, 3 and 4
+respectively.
 
 ```
 | 4 bit year | 4 bit month | 5 bit day | 5 bit hour | 6 bit minute |
@@ -35,3 +35,11 @@ Supported queries based on byte comparisons with `memcmp`:
 - year + month + day: byte 1,2
 - year + month + day + hour: byte 1,2,3
 - year + month + day + hour + minute: byte 1,2,3,4
+
+For queries in Go, we can convert an encoded uin32 to a 4-byte big endian byte
+array as follows:
+
+```go
+bcdtquery := make([]byte, 4)
+binary.BigEndian.PutUint32(bcdtquery, encoded)
+```
