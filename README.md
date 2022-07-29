@@ -32,6 +32,6 @@ The next year zero will be 2038.
 
 Supported queries based on byte comparisons with `memcmp`:
 - year + month: use byte 1 to encode year and month
-- year + month + day: use byte 1,2
-- year + month + day + hou: use byte 1,2,3
-- year + month + day + hour + minute: use byte 1,2,3,4
+- year + month + day: byte 1,2
+- year + month + day + hour: byte 1,2,3
+- year + month + day + hour + minute: byte 1,2,3,4
