@@ -25,7 +25,7 @@ func TestOracleExample(t *testing.T) {
 }
 
 func TestDecodeByteArray(t *testing.T) {
-	v := bcdt.DecodeByteArray([]byte{7, 29, 7, 23})
+	v := bcdt.DecodeByteArray([4]byte{7, 29, 7, 23})
 	expected := 1659079380
 
 	if v != int64(expected) {

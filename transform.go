@@ -33,9 +33,9 @@ func Encode(epoch int64) uint32 {
 	return i
 }
 
-func DecodeByteArray(be []byte) int64 {
+func DecodeByteArray(be [4]byte) int64 {
 	var encoded uint32
-	buf := bytes.NewReader(be)
+	buf := bytes.NewReader(be[:])
 	binary.Read(buf, binary.BigEndian, &encoded)
 
 	return Decode(encoded)
