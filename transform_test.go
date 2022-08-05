@@ -15,12 +15,12 @@ func TestOracleExample(t *testing.T) {
 	epoch := 1659079415
 	encoded := bcdt.Encode(int64(epoch))
 
-	bs := make([]byte, 4)
-	binary.BigEndian.PutUint32(bs, encoded)
+	got := make([]byte, 4)
+	binary.BigEndian.PutUint32(got, encoded)
 
 	expected := []byte{7, 29, 7, 23}
-	if bytes.Compare(bs, expected) != 0 {
-		t.Errorf("expected %v but got %v", expected, bs)
+	if bytes.Compare(got, expected) != 0 {
+		t.Errorf("expected %v but got %v", expected, got)
 	}
 }
 
