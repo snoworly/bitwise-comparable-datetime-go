@@ -11,6 +11,15 @@ import (
 	bcdt "github.com/snoworly/bitwise-comparable-datetime-go"
 )
 
+func TestZero(t *testing.T) {
+	got := bcdt.DecodeByteArray([4]byte{0, 0, 0, 0})
+
+	var expected int64
+	if expected != got {
+		t.Errorf("expected %v but got %v", expected, got)
+	}
+}
+
 func TestOracleExample(t *testing.T) {
 	epoch := 1659079415
 	encoded := bcdt.Encode(int64(epoch))

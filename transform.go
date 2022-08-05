@@ -34,6 +34,10 @@ func Encode(epoch int64) uint32 {
 }
 
 func DecodeByteArray(be [4]byte) int64 {
+	if bytes.Compare([]byte{0, 0, 0, 0}, be[:]) == 0 {
+		return 0
+	}
+
 	var encoded uint32
 	buf := bytes.NewReader(be[:])
 	binary.Read(buf, binary.BigEndian, &encoded)
@@ -42,6 +46,10 @@ func DecodeByteArray(be [4]byte) int64 {
 }
 
 func Decode(datetime uint32) int64 {
+	if datetime == 0 {
+		return 0
+	}
+
 	var offset uint32 = 0
 
 	minute := datetime & (255 << offset)
